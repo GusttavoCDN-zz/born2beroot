@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
@@ -18,7 +19,5 @@ chmod a+x *
 mkdir /var/log/sudo
 sysetmctl enable apparmor
 
-./set_sshserver.sh
 ./set_firewall.sh
 ./set_passwdpolicy.sh
-./set_loginuser.sh
