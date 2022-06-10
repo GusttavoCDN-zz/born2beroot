@@ -1,5 +1,17 @@
 #!/bin/bash
 
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    monitoring.sh                                      :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: otaku <otaku@student.42.fr>                +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/06/09 23:29:02 by otaku             #+#    #+#              #
+#    Updated: 2022/06/09 23:29:04 by otaku            ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 SYSTEM_ARCHITECTURE=$(uname -a)
 PHYSICAL_CPU=$(lscpu | grep "CPU(s):" | sed -n "1p" | awk '{ print $2 }')
 VIRTUAL_CPU=$(grep "^processor" /proc/cpuinfo | wc -l)
