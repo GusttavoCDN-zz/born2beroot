@@ -4,7 +4,7 @@
      
 <p align="center"><a href="https://www.42sp.org.br/" target="_blank"><img src="https://img.shields.io/static/v1?label=&message=SP& color=000&style=for-the-badge&logo=42"></a></p>
 
-<p align="center"><img src="https://game.42sp.org.br/static/assets/achievements/ft_printfe.png"> </p>
+<p align="center"><img src="https://game.42sp.org.br/static/assets/achievements/born2beroote.png"> </p>
 
 <p align="center">Nota: <strong>100/100</strong> ✔️ </p>
        
@@ -189,3 +189,23 @@ Para aplicar as regras de expiração a usuarios já existens podem ser usados o
 
 ## **Configurações de Hostname, Usuarios e Grupos**
 
+Hostname é o nome dado ao servidor durante a configuração inicial de instalação, aqui no caso foi dado guda-sil42 por exigencia do projeto. Para alterar essas informações existem diversos métodos.
+
+Um deles é usando o comando abaixo:
+
+```
+    sudo hostnamectl set-hostname <novo hostname>
+```
+
+Ou alterando os arquivos ```/etc/hostname```, ```/etc/hosts``` e ```/proc/sys/kernel/hostname```.
+
+A criação de usuarios e grupos são bem simples e de facil manipulação com comandos intuitivos.
+
+```
+    sudo adduser <nome do usuario>
+    sudo addgroup <nome do grupo>
+    sudo adduser <nome do usuario> <nome do grupo> # Adiciona o usuario um grupo
+    sudo passwd <nome do usuario> # Altera a senha do usuario
+    groups <nome do usuario> # Mostra os grupos do usuario
+    gpasswd -d <nome do usuario> <nome do grupo> # Remove o usuario do grupo
+```
