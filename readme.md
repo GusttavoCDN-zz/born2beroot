@@ -76,8 +76,12 @@ Para poder especificar regras para o comando sudo é preciso modificar o arquivo
     visudo
 ```
 
-var/log/sudo/sudo.log
+Nesse projeto as regras aplicadas ao Sudo foram:
 
+- **Defaults** passwd_tries=3
+- **Defaults** badpass_message="Mensagem escolhida"
+- **Defaults** logfile="/var/log/sudo.log"
+- **Defaults** requiretty
 ### **Material para Estudar**
 
 - [Documentação do Sudo](https://www.sudo.ws/docs/man/1.8.15/sudoers.man/)
@@ -137,3 +141,51 @@ Para se conectar a um computador pode ser utilizado o comando:
 ```
 
 ### **Material para Estudar**
+
+ - [How to install and enable ssh server on debian](https://devconnected.com/how-to-install-and-enable-ssh-server-on-debian-10/#Changing_SSH_default_port)
+ - [Transferencia de arquivos com SSH](https://www.hostinger.com.br/tutoriais/usar-comando-scp-linux-para-transferir-arquivos)
+ - [Beginners Guide To SSH](https://www.youtube.com/watch?v=qWKK_PNHnnA)
+ - [SSH Crash Course](https://www.youtube.com/watch?v=hQWRp-FdTpc)
+
+## **Configurando Politica de Senhas**
+
+Nesse projeto tambem foi necessario implementar uma politica de senhas para garantir a segurança do sistema. Essa politica foi aplicada em duas partes.
+
+Primeiro foi configurando as exigencians de expiração de senhas. Isso foi feito configurando o arquivo ```/etc/login.defs```. Foram aplicadas as seguintes regras:
+
+- **PASS_MAX_DAYS**: Máximo de dias para senha expirar = 30
+- **PASS_MIN_DAYS**: Mínimo de dias necessarios para poder realizar outra alteração de senha  = 2
+- **PASS_WARN_AGE**: Dias para aviso de expiração de senha = 7
+
+O segundo passo é definir as regraças de senha para os usuarios do sistema. Isso foi feito com a ajuda do pacote  ```pwquality```.
+
+```
+    sudo apt install libpam-pwquality
+```
+
+Com o pacote instalado as configurações devem ser feitas no arquivo ```/etc/pam.d/common-password```.
+
+- **retry=3**: Número de tentativas para a senha ser alterada
+- **minlen**: Mínimo de caracteres para senha = 10
+- **dcredit** Mínimo de um digito númerico = -1
+- **ucredit** Mínimo de uma letra maiuscula = -1
+- **lcredit** Mínimo de uma letra minuscula = -1
+- **maxrepeat** Máximo de caracteres repetidos = 3
+- **reject_username** Não permitir senhas com o nome do usuario
+- **difok** Senha deve ter pelo menos 7 caracteres que não fazem parte da antiga.
+- **enforce_for_root** Aplica as restrições mesmo quando o root estiver configurando a senha.
+
+Para aplicar as regras de expiração a usuarios já existens podem ser usados os comandos abaixo:
+
+- **sudo chage -M 30 [usuario]**: Altera a data de expiração da senha para 30 dias
+- **sudo chage -m 2 [usuario]**: Altera o numero minimo de dias para alterar a senha
+- **sudo chage -W 7 [usuario]**: Altera o numero de dias para aviso de expiração da senha
+- **sudo chage -l [usuario]**: Mostra as configurações de senha do usuario
+
+### **Material para Estudar**
+
+- [Como aplicar politicas de Senha no Linux](https://tiparaleigo.wordpress.com/2020/08/13/como-aplicar-politicas-de-senha-no-linux-ubuntu-centos/)
+- [How  to force users to use secure passwords](https://www.cyberciti.biz/faq/securing-passwords-libpam-cracklib-on-debian-ubuntu-linux/)
+
+## **Configurações de Hostname, Usuarios e Grupos**
+
